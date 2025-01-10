@@ -91,6 +91,26 @@ spec:
         recovery:
           method: object_store
           credentials: s3
+    ingress:
+      main:
+        enabled: true
+        hosts:
+          - host: auth2.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+          - host: '*.${DOMAIN_0}'
+            paths:
+              - path: /outpost.goauthentik.io
+                pathType: Prefix
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: domain-0-le-staging
+          traefik:
+            enabled: true
+            entrypoints:
+                - websecure
     authentik:
       credentials:
         email: ${NOREPLYADDRESS}
